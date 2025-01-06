@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-import json 
+import json
 
 walmart_url = "https://www.walmart.com/ip/Ovios-L-Shape-Sectional-Sofa-Modern-Upholstered-Modular-Couch-for-Living-Room/5501723952?classType=VARIANT&adsRedirect=true"
 
@@ -22,5 +22,16 @@ soup = BeautifulSoup(response.text, 'html.parser')
 script_tag = soup.find("script", id="__NEXT_DATA__")
 data = json.loads(script_tag.string)
 
+# Kinda like setting the root where the following lines will access
+initial_data = data['props']['pageProps']['initialData']['data']
+product_data = initial_data['product']
+reviews_data = initial_data.get ('reviews', {})
+
+# Dictionary to store the product information
+product_info = {
+    'product_name': product_data['name'],
+    'price': product_data['priceInfo']['currentPrice']['price'],
+    'brand':  product_data.get('brand', ''),
+}
 # Drills through the parsed JSON & props data to find price of product
-print(data['props']['pageProps']['initialData']['data']['product']['priceInfo']['currentPrice']['price'])
+print(product_info)
