@@ -35,3 +35,5 @@ product_info = {
 }
 # Drills through the parsed JSON & props data to find price of product
 print(product_info)
+print(product_info)
+
